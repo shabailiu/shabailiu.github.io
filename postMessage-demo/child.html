@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+    <h1>This is the child window.</h1>
+    <button id="window-top">postMessage to window.top</button><br/>
+    <button id="window-parent">postMessage to window.parent</button><br/>
+    <button id="window-opener">postMessage to window.opener</button>
+    <div id="post"></div>
+    <script>
+        window.onload = function() {
+            window.addEventListener('message', function(event) {
+                var div = document.createElement('div');
+                div.innerHTML = '<div>Received postMessage: ' + event.data + '</div>';
+                document.getElementById('post').appendChild(div);
+            });
+
+            document.getElementById('window-top').addEventListener('click', function(event) {
+                window.top.postMessage('[Child posted via window.top]', '*');
+            });
+            document.getElementById('window-parent').addEventListener('click', function(event) {
+                window.parent.postMessage('[Child posted via window.parent]', '*');
+            });
+            document.getElementById('window-opener').addEventListener('click', function(event) {
+                window.opener.postMessage('[Child posted via window.opener]', '*');
+            });
+        };
+    </script>
+</body>
+</html>

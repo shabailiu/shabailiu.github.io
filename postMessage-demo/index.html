@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        iframe {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>This is the parent window.</h1>
+    <button id="open-mb">Open Mini-Browser</button>
+    <button id="open-iframe">Open iframe</button>
+    <div id="post"></div>
+    <div id="iframe-container"></div>
+    <script>
+        window.onload = function() {
+            window.addEventListener('message', function(event) {
+                var div = document.createElement('div');
+                div.innerHTML = '<div>Received postMessage: ' + event.data + '</div>';
+                document.getElementById('post').appendChild(div);
+            });
+
+            document.getElementById('open-mb').addEventListener('click', function() {
+                window.open('child.html','','width=800,height=600');
+            });
+            document.getElementById('open-iframe').addEventListener('click', function() {
+                var iframe = document.createElement('iframe');
+                iframe.src = 'child.html';
+                document.getElementById('iframe-container').appendChild(iframe);
+            });
+        };
+    </script>
+</body>
+</html>
